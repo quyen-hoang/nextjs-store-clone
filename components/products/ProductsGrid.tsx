@@ -40,9 +40,7 @@ function ProductsGrid({ products }: { products: Product[] }) {
                             </Card>
                         </Link>
                         <div className='absolute top-7 right-7 z-5'>
-                            <Suspense>
-                                <FavoriteToggleButton productId={productId} />
-                            </Suspense>
+                            <FavoriteToggleButton productId={productId} />
                         </div>
                     </article>
                 );
