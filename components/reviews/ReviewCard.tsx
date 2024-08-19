@@ -27,12 +27,12 @@ function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
                         priority
                         className='w-12 h-12 rounded-full object-cover'
                     />
-                </div>
-                <div className='ml-4'>
-                    <h3 className='text-sm font-bold capitalize mb-1'>
-                        {name}
-                    </h3>
-                    <Rating rating={rating} />
+                    <div className='ml-4'>
+                        <h3 className='text-sm font-bold capitalize mb-1'>
+                            {name}
+                        </h3>
+                        <Rating rating={rating} />
+                    </div>
                 </div>
             </CardHeader>
             <CardContent>
