@@ -1,25 +1,52 @@
-import { Checkbox } from "../ui/checkbox";
+"use client";
 
-type CheckboxInputProps = {
+import type { actionFunction } from "@/utils/types";
+import Image from "next/image";
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { SubmitButton } from "@/components/form/Buttons";
+import FormContainer from "./FormContainer";
+import ImageInput from "./ImageInput";
+
+type ImageInputContainerProps = {
+    image: string;
     name: string;
-    defaultChecked?: boolean;
-    label: string;
+    action: actionFunction;
+    text: string;
+    children?: React.ReactNode;
 };
 
-function ImageInputContainer({
-    name,
-    label,
-    defaultChecked,
-}: CheckboxInputProps) {
+function ImageInputContainer(props: ImageInputContainerProps) {
+    const { image, name, action, text } = props;
+    const [isUpdateFormVisible, setIsUpdateFormVisible] = useState(false);
+
     return (
-        <div className='flex items-center space-x-2'>
-            <Checkbox id={name} name={name} defaultChecked={defaultChecked} />
-            <label
-                htmlFor={name}
-                className='text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize'
+        <div className='mb-8'>
+            <Image
+                src={image}
+                alt={name}
+                width={200}
+                height={200}
+                priority
+                className='rounded-md object-cover mb-4 w-[200px] h-[200px]'
+            />
+
+            <Button
+                variant='outline'
+                size='sm'
+                onClick={() => setIsUpdateFormVisible((prev) => !prev)}
             >
-                {label || name}
-            </label>
+                {text}
+            </Button>
+            {isUpdateFormVisible && (
+                <div className='max-w-md mt-4'>
+                    <FormContainer action={action}>
+                        {props.children}
+                        <ImageInput />
+                        <SubmitButton size='sm' />
+                    </FormContainer>
+                </div>
+            )}
         </div>
     );
 }

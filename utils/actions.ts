@@ -3,7 +3,7 @@ import db from "@/utils/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { imageSchema, productSchema, validatedWithZodSchema } from "./schemas";
-import { uploadImage } from "./supabase";
+import { deleteImage, uploadImage } from "./supabase";
 import { revalidatePath } from "next/cache";
 
 const renderError = (error: unknown): { message: string } => {
@@ -105,13 +105,80 @@ export const deleteProductAction = async (prevState: { productId: string }) => {
     await getAdminUser();
 
     try {
-        await db.product.delete({
+        const product = await db.product.delete({
             where: {
                 id: productId,
             },
         });
+        await deleteImage(product.image);
         revalidatePath("/admin/products");
         return { message: "product removed" };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+// ### FetchAdminProductDetails, UpdateProductAction and updateProductImageAction
+export const fetchAdminProductDetails = async (productId: string) => {
+    await getAuthUser();
+    const product = await db.product.findUnique({
+        where: {
+            id: productId,
+        },
+    });
+    if (!product) redirect("/admin/products");
+    return product;
+};
+
+export const updateProductAction = async (
+    prevState: any,
+    formData: FormData
+) => {
+    await getAdminUser();
+    try {
+        const productId = formData.get("id") as string;
+        const rawData = Object.fromEntries(formData);
+        const validatedFields = validatedWithZodSchema(productSchema, rawData);
+
+        await db.product.update({
+            where: {
+                id: productId,
+            },
+            data: {
+                ...validatedFields,
+            },
+        });
+        revalidatePath(`/admin/products/${productId}/edit`);
+        return { message: "Product update successfully" };
+    } catch (error) {
+        return renderError(error);
+    }
+};
+
+export const updateProductImageAction = async (
+    prevState: any,
+    formData: FormData
+) => {
+    try {
+        await getAuthUser();
+        const image = formData.get("image") as File;
+        const productId = formData.get("id") as string;
+        const oldImageUrl = formData.get("url") as string;
+        console.log(oldImageUrl);
+        const validatedFile = validatedWithZodSchema(imageSchema, { image });
+        const fullPath = await uploadImage(validatedFile.image);
+
+        await deleteImage(oldImageUrl);
+        await db.product.update({
+            where: {
+                id: productId,
+            },
+            data: {
+                image: fullPath,
+            },
+        });
+        revalidatePath(`/admin/products/${productId}/edit`);
+        return { message: "Product Image updated successfully" };
     } catch (error) {
         return renderError(error);
     }
