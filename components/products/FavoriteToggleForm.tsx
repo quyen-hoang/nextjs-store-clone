@@ -22,7 +22,7 @@ function FavoriteToggleForm({
     });
     return (
         <FormContainer action={toggleAction}>
-            <CardSubmitButton isFavorite={favoriteId ? true : false} />
+            <CardSubmitButton isFavorite={favoriteId} />
         </FormContainer>
     );
 }
