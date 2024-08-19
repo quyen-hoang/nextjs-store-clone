@@ -4,10 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import FavoriteToggleButton from "./FavoriteToggleButton";
-import { auth } from "@clerk/nextjs/server";
 
 async function ProductsGrid({ products }: { products: Product[] }) {
-    const { userId } = auth();
     return (
         <div className='pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
             {products.map((product) => {
@@ -41,10 +39,7 @@ async function ProductsGrid({ products }: { products: Product[] }) {
                             </Card>
                         </Link>
                         <div className='absolute top-7 right-7 z-5'>
-                            <FavoriteToggleButton
-                                productId={productId}
-                                userId={userId}
-                            />
+                            <FavoriteToggleButton productId={productId} />
                         </div>
                     </article>
                 );
