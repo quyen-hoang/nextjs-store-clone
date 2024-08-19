@@ -2,6 +2,7 @@ import FavoriteToggleButton from "@/components/products/FavoriteToggleButton";
 import AddToCart from "@/components/single-product/AddToCart";
 import BreadCrumbs from "@/components/single-product/BreadCrumbs";
 import ProductRating from "@/components/single-product/ProductRating";
+import ShareButton from "@/components/single-product/ShareButton";
 import { fetchSingleProduct } from "@/utils/actions";
 import { formatCurrency } from "@/utils/format";
 import Image from "next/image";
@@ -32,6 +33,7 @@ async function SingleProductPage({ params }: { params: { id: string } }) {
                             {name}
                         </h1>
                         <FavoriteToggleButton productId={params.id} />
+                        <ShareButton productId={params.id} name={name} />
                     </div>
                     <ProductRating productId={params.id} />
                     <h4 className='text-xl mt-2'>{company}</h4>

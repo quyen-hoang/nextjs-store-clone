@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 // import FavoriteToggleButton from "./FavoriteToggleButton";
 
-async function ProductsGrid({ products }: { products: Product[] }) {
+function ProductsGrid({ products }: { products: Product[] }) {
     return (
         <div className='pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
             {products.map((product) => {
