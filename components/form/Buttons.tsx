@@ -93,22 +93,15 @@ export const CardSubmitButton = ({
 }: {
     isFavorite: string | null;
 }) => {
-    const { pending } = useFormStatus();
+    console.log(isFavorite);
     return (
         <Button
             type='submit'
             size='icon'
             variant='outline'
             className='p-2 cursor-pointer'
-            disabled={pending}
         >
-            {pending ? (
-                <ReloadIcon className='animate-spin' />
-            ) : isFavorite ? (
-                <FaHeart />
-            ) : (
-                <FaRegHeart />
-            )}
+            hi
         </Button>
     );
 };
