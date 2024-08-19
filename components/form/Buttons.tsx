@@ -1,11 +1,11 @@
 "use client";
 
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { useFormStatus } from "react-dom";
 import { Button } from "../ui/button";
-import { ReloadIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-import { LuPenSquare, LuTrash2 } from "react-icons/lu";
 import { SignInButton } from "@clerk/nextjs";
+import { LuPenSquare, LuTrash2 } from "react-icons/lu";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 type btnSize = "default" | "lg" | "sm";
@@ -30,6 +30,7 @@ export function SubmitButton({
             type='submit'
             disabled={pending}
             className={cn("capitalize", className)}
+            size={size}
         >
             {pending ? (
                 <>
@@ -72,7 +73,7 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
 
 export const CardSignInButton = () => {
     return (
-        <SignInButton>
+        <SignInButton mode='modal'>
             <Button
                 type='button'
                 size='icon'
