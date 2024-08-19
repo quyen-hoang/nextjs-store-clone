@@ -12,6 +12,7 @@ import { links } from "@/utils/links";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import SignOutLink from "./SignOutLink";
 import { auth } from "@clerk/nextjs/server";
+import UserIcon from "./UserIcon";
 
 function LinksDropdown() {
     const { userId } = auth();
@@ -21,6 +22,7 @@ function LinksDropdown() {
             <DropdownMenuTrigger asChild>
                 <Button variant='outline' className='flex gap-4 max-w-[100px]'>
                     <LuAlignLeft className='w-6 h-6' />
+                    <UserIcon />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className='w-40' align='start' sideOffset={10}>
