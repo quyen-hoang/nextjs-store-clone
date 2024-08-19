@@ -9,9 +9,7 @@ import { revalidatePath } from "next/cache";
 
 const getAuthUser = async () => {
     const user = await currentUser();
-    if (!user) {
-        throw new Error("You must be logged in to access this route");
-    }
+    if (!user) redirect("/");
     return user;
 };
 
