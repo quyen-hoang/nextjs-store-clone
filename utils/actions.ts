@@ -20,6 +20,12 @@ const getAuthUser = async () => {
     return user;
 };
 
+const getAdminUser = async () => {
+    const user = await getAuthUser();
+    if (user.id !== process.env.ADMIN_USER_ID) redirect("/");
+    return user;
+};
+
 export const fetchFeaturedProducts = async () => {
     const products = await db.product.findMany({
         where: {
@@ -68,7 +74,6 @@ export const createProductAction = async (
         const validatedFile = validatedWithZodSchema(imageSchema, {
             image: file,
         });
-        console.log(validatedFile);
         const fullPath = await uploadImage(validatedFile.image);
 
         await db.product.create({
@@ -82,4 +87,14 @@ export const createProductAction = async (
         return renderError(error);
     }
     redirect("/admin/products");
+};
+
+export const fetchAdminProducts = async () => {
+    await getAdminUser();
+    const products = db.product.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+    return products;
 };
