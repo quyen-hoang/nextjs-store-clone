@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { SignInButton } from "@clerk/nextjs";
 import { LuPenSquare, LuTrash2 } from "react-icons/lu";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useState } from "react";
 
 type btnSize = "default" | "lg" | "sm";
 
@@ -23,13 +24,24 @@ export function SubmitButton({
     text = "submit",
     size = "lg",
 }: SubmitButtonProps) {
+    const { pending } = useFormStatus();
+
     return (
         <Button
             type='submit'
+            disabled={pending}
             className={cn("capitalize", className)}
             size={size}
         >
-            {text}
+            {pending ? (
+                <>
+                    {" "}
+                    <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+                    Please wait...
+                </>
+            ) : (
+                text
+            )}
         </Button>
     );
 }
@@ -101,7 +113,7 @@ export const ProductSignInButton = () => {
     return (
         <SignInButton>
             <Button type='button' size='default' className='nt-8'>
-                Please Sign In
+                Please sign In
             </Button>
         </SignInButton>
     );

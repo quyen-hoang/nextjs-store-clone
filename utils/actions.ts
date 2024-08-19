@@ -492,7 +492,7 @@ export const addToCartAction = async (prevState: any, formData: FormData) => {
     } catch (error) {
         return renderError(error);
     }
-    redirect("/cart");
+    return redirect("/cart");
 };
 export const removeCartItemAction = async () => {};
 export const updateCartItemAction = async () => {};
