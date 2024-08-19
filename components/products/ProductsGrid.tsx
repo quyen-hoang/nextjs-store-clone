@@ -3,7 +3,6 @@ import { formatCurrency } from "@/utils/format";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import FavoriteToggleButton from "./FavoriteToggleButton";
 
 async function ProductsGrid({ products }: { products: Product[] }) {
     return (
@@ -38,9 +37,6 @@ async function ProductsGrid({ products }: { products: Product[] }) {
                                 </CardContent>
                             </Card>
                         </Link>
-                        <div className='absolute top-7 right-7 z-5'>
-                            <FavoriteToggleButton productId={productId} />
-                        </div>
                     </article>
                 );
             })}
