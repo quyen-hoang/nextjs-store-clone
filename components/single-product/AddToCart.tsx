@@ -7,11 +7,11 @@ import SelectProductAmount, {
 import FormContainer from "../form/FormContainer";
 import { ProductSignInButton, SubmitButton } from "../form/Buttons";
 import { addToCartAction } from "@/utils/actions";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 function AddToCart({ productId }: { productId: string }) {
     const [amount, setAmount] = useState(1);
-    const { userId } = useAuth();
+    const { user } = useUser();
 
     return (
         <div className='mt-4'>
@@ -20,7 +20,7 @@ function AddToCart({ productId }: { productId: string }) {
                 amount={amount}
                 setAmount={setAmount}
             />
-            {userId ? (
+            {user ? (
                 <FormContainer action={addToCartAction}>
                     <input type='hidden' name='productId' value={productId} />
                     <input type='hidden' name='amount' value={amount} />
