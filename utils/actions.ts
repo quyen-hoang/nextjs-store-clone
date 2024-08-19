@@ -1,17 +1,11 @@
 "use server";
+
 import db from "@/utils/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { imageSchema, productSchema, validatedWithZodSchema } from "./schemas";
 import { deleteImage, uploadImage } from "./supabase";
 import { revalidatePath } from "next/cache";
-
-const renderError = (error: unknown): { message: string } => {
-    console.log(error);
-    return {
-        message: error instanceof Error ? error.message : "An Error occurred",
-    };
-};
 
 const getAuthUser = async () => {
     const user = await currentUser();
@@ -25,6 +19,13 @@ const getAdminUser = async () => {
     const user = await getAuthUser();
     if (user.id !== process.env.ADMIN_USER_ID) redirect("/");
     return user;
+};
+
+const renderError = (error: unknown): { message: string } => {
+    console.log(error);
+    return {
+        message: error instanceof Error ? error.message : "An Error occurred",
+    };
 };
 
 export const fetchFeaturedProducts = async () => {
