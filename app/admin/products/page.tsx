@@ -1,3 +1,5 @@
+import { IconButton } from "@/components/form/Buttons";
+import FormContainer from "@/components/form/FormContainer";
 import EmptyList from "@/components/global/EmptyList";
 import {
     Table,
@@ -8,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { fetchAdminProducts } from "@/utils/actions";
+import { deleteProductAction, fetchAdminProducts } from "@/utils/actions";
 import { formatCurrency } from "@/utils/format";
 import Link from "next/link";
 
@@ -37,7 +39,7 @@ async function ItemPage() {
                                 <TableCell>
                                     <Link
                                         href={`/products/${productId}`}
-                                        className='underline text-muted-foreground tracking-wide capitalize'
+                                        className='underline hover:text-primary text-muted-foreground tracking-wide capitalize'
                                     >
                                         {name}
                                     </Link>
@@ -45,7 +47,12 @@ async function ItemPage() {
                                 <TableCell>{company}</TableCell>
                                 <TableCell>{formatCurrency(price)}</TableCell>
                                 <TableCell className='flex items-center gap-x-2'>
-                                    actions
+                                    <Link
+                                        href={`/admin/products/${productId}/edit`}
+                                    >
+                                        <IconButton actionType='edit' />
+                                    </Link>
+                                    <DeleteProduct productId={productId} />
                                 </TableCell>
                             </TableRow>
                         );
@@ -55,4 +62,14 @@ async function ItemPage() {
         </section>
     );
 }
+
+function DeleteProduct({ productId }: { productId: string }) {
+    const deleteProduct = deleteProductAction.bind(null, { productId });
+    return (
+        <FormContainer action={deleteProduct}>
+            <IconButton actionType='delete' />
+        </FormContainer>
+    );
+}
+
 export default ItemPage;
