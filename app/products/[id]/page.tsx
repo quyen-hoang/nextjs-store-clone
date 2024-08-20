@@ -41,11 +41,11 @@ async function SingleProductPage({ params }: { params: { id: string } }) {
                             {name}
                         </h1>
                         <div className='flex items-center gap-x-2'>
-                            <FavoriteToggleButton productId={params.id} />
-                            <ShareButton productId={params.id} name={name} />
+                            <FavoriteToggleButton productId={product.id} />
+                            <ShareButton productId={product.id} name={name} />
                         </div>
                     </div>
-                    <ProductRating productId={params.id} />
+                    <ProductRating productId={product.id} />
                     <h4 className='text-xl mt-2'>{company}</h4>
                     <p className='mt-3 text-md bg-muted inline-block p-2 rounded-md'>
                         {dollarsAmount}
@@ -53,11 +53,11 @@ async function SingleProductPage({ params }: { params: { id: string } }) {
                     <p className='mt-6 leading-8 text-muted-foreground'>
                         {description}
                     </p>
-                    <AddToCart productId={params.id} />
+                    <AddToCart productId={product.id} />
                 </div>
             </div>
-            <ProductReviews productId={params.id} />
-            {reviewDoesNotExist && <SubmitReview productId={params.id} />}
+            <ProductReviews productId={product.id} />
+            {reviewDoesNotExist && <SubmitReview productId={product.id} />}
         </section>
     );
 }
