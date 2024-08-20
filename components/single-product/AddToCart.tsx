@@ -7,7 +7,7 @@ import SelectProductAmount, {
 import FormContainer from "../form/FormContainer";
 import { ProductSignInButton, SubmitButton } from "../form/Buttons";
 import { addToCartAction } from "@/utils/actions";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 
 function AddToCart({ productId }: { productId: string }) {
     const [amount, setAmount] = useState(1);
