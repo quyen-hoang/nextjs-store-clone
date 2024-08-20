@@ -635,4 +635,5 @@ export const addToCartAction = async (prevState: any, formData: FormData) => {
     await updateOrCreateCartItem({ productId, cartId: cart.id, amount });
     await updateCart(cart);
     revalidatePath("/cart");
+    return { message: "add to art" };
 };
