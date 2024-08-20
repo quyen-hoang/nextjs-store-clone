@@ -638,8 +638,8 @@ export const addToCartAction = async (
         const cart = await fetchOrCreateCart({ userId: user.id });
         await updateOrCreateCartItem({ productId, cartId: cart.id, amount });
         await updateCart(cart);
+        return { message: "added to cart" };
     } catch (error) {
         return renderError(error);
     }
-    redirect("/cart");
 };
