@@ -1,8 +1,8 @@
 "use client";
 import type { actionFunction } from "@/utils/types";
-import { useFormState } from "react-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect } from "react";
+import { useFormState } from "react-dom";
 
 const initialState = {
     message: "",
@@ -22,7 +22,7 @@ function FormContainer({
         if (state.message) {
             toast({ description: state.message });
         }
-    }, [state]);
+    }, [state, toast]);
 
     return <form action={formAction}>{children}</form>;
 }
