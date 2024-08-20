@@ -631,15 +631,11 @@ export const addToCartAction = async (
     formData: FormData
 ): Promise<{ message: string }> => {
     const user = await getAuthUser();
-    try {
-        const productId = formData.get("productId") as string;
-        const amount = Number(formData.get("amount"));
-        await fetchProduct(productId);
-        const cart = await fetchOrCreateCart({ userId: user.id });
-        await updateOrCreateCartItem({ productId, cartId: cart.id, amount });
-        await updateCart(cart);
-        return { message: "added to cart" };
-    } catch (error) {
-        return renderError(error);
-    }
+    const productId = formData.get("productId") as string;
+    const amount = Number(formData.get("amount"));
+    await fetchProduct(productId);
+    const cart = await fetchOrCreateCart({ userId: user.id });
+    await updateOrCreateCartItem({ productId, cartId: cart.id, amount });
+    await updateCart(cart);
+    return { message: "added to cart" };
 };
