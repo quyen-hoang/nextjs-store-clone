@@ -626,7 +626,10 @@ export const updateCart = async (cart: Cart) => {
     return { cartItems, currentCart };
 };
 
-export const addToCartAction = async (prevState: any, formData: FormData) => {
+export const addToCartAction = async (
+    prevState: any,
+    formData: FormData
+): Promise<{ message: string }> => {
     const user = await getAuthUser();
     try {
         const productId = formData.get("productId") as string;
