@@ -626,10 +626,7 @@ export const updateCart = async (cart: Cart) => {
     return { cartItems, currentCart };
 };
 
-export const addToCartAction = async (
-    prevState: any,
-    formData: FormData
-): Promise<{ message: string }> => {
+export const addToCartAction = async (prevState: any, formData: FormData) => {
     const user = await getAuthUser();
     const productId = formData.get("productId") as string;
     const amount = Number(formData.get("amount"));
@@ -637,5 +634,5 @@ export const addToCartAction = async (
     const cart = await fetchOrCreateCart({ userId: user.id });
     await updateOrCreateCartItem({ productId, cartId: cart.id, amount });
     await updateCart(cart);
-    return { message: "added to cart" };
+    redirect("/cart");
 };
